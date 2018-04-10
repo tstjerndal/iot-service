@@ -13,15 +13,16 @@ import java.util.Set;
  */
 @Entity
 
-public class sensor {
+public class Sensor {
     @Id
     @GeneratedValue
-    private Long Id;
-    private String Code;
+    private Long id;
+
+    private String code;
+
+    private String name;
 
     @JsonIgnore
-    private String Name;
-
     @OneToMany(mappedBy = "sensorData")
     private Set<SensorData> sensorDatas = new HashSet<>();
 
@@ -30,19 +31,19 @@ public class sensor {
     }
 
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public Set<SensorData> getSensorDatas() {
