@@ -27,7 +27,7 @@ public class Sensor {
     private Set<SensorData> sensorDatas = new HashSet<>();
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getCode() {
