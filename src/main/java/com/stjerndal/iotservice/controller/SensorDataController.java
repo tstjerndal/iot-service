@@ -30,13 +30,13 @@ class SensorDataController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    Collection<SensorData> readBookmarks(@PathVariable String name) {
+    Collection<SensorData> readBookmarks(@PathVariable String name) throws Exception {
         this.validateSensor(name);
         return this.sensorDataRepository.findBySensorName(name);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    ResponseEntity<?> add(@PathVariable String name, @RequestBody Sensor input) {
+    ResponseEntity<?> add(@PathVariable String name, @RequestBody Sensor input) throws Exception {
         this.validateSensor(name);
 
         return this.sensorRepository
