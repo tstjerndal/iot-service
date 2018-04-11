@@ -1,18 +1,15 @@
-package com.stjerndal.iotservice.com.stjerndal.iotservice.entity;
+package com.stjerndal.iotservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by tommy on 2018-04-07.
+ * Get the senssor info
  */
 @Entity
-/**
- * Created by tommy on 2018-04-10.
- */
+
 public class SensorData {
     @Id
     @GeneratedValue
@@ -27,7 +24,7 @@ public class SensorData {
 
     private SensorData() { } // JPA only
 
-    public SensorData(final Sensor sensor, final String name, final Long value) {
+    public SensorData(final Sensor sensor, final Date date, final Long value) {
         this.value = value;
         this.date = date;
         this.sensor = sensor;

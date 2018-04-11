@@ -1,4 +1,4 @@
-package com.stjerndal.iotservice.com.stjerndal.iotservice.entity;
+package com.stjerndal.iotservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
@@ -23,8 +23,18 @@ public class Sensor {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "sensorData")
+    @OneToMany(mappedBy = "sensor")
     private Set<SensorData> sensorDatas = new HashSet<>();
+
+    private Sensor() { } // JPA only
+
+    public Sensor(final String name, final String code) {
+        this.name = name;
+        this.code = code;
+    }
+
+
+
 
     public Long getId() {
         return id;

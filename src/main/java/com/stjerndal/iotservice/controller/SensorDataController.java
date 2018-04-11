@@ -1,7 +1,7 @@
 package com.stjerndal.iotservice.controller;
 
-import com.stjerndal.iotservice.com.stjerndal.iotservice.entity.Sensor;
-import com.stjerndal.iotservice.com.stjerndal.iotservice.entity.SensorData;
+import com.stjerndal.iotservice.entity.Sensor;
+import com.stjerndal.iotservice.entity.SensorData;
 import com.stjerndal.iotservice.repository.SensorDataRepository;
 import com.stjerndal.iotservice.repository.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Optional;
 
 /**
  * Created by tommy on 2018-04-10.
@@ -23,14 +25,13 @@ class SensorDataController {
 
 
     @Autowired
-    SensorDataController(SensorDataRepository sensorDataRepository,
-                           SensorRepository sensorRepository) {
+    SensorDataController(SensorDataRepository sensorDataRepository,SensorRepository sensorRepository) {
         this.sensorDataRepository = sensorDataRepository;
         this.sensorRepository = sensorRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    Collection<SensorData> readBookmarks(@PathVariable String name) throws Exception {
+    Collection<SensorData> readSensorData(@PathVariable String name) throws Exception {
         this.validateSensor(name);
         return this.sensorDataRepository.findBySensorName(name);
     }
@@ -39,15 +40,10 @@ class SensorDataController {
     ResponseEntity<?> add(@PathVariable String name, @RequestBody Sensor input) throws Exception {
         this.validateSensor(name);
 
-        return this.sensorRepository
-                .findByName(name)
-                .map(sensor -> {
-                    SensorData result = sensorDataRepository.save(new SensorData(sensor,
-                            input.getName(), input.getId()));
+        return this.sensorRepository.findByName(name).map(sensor -> {
+                    SensorData result = sensorDataRepository.save(new SensorData(sensor,new Date(), input.getId()));
 
-                    URI location = ServletUriComponentsBuilder
-                            .fromCurrentRequest().path("/{id}")
-                            .buildAndExpand(result.getId()).toUri();
+                    URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
 
                     return ResponseEntity.created(location).build();
                 })
@@ -56,9 +52,13 @@ class SensorDataController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{sensorDataId}")
-    SensorData readSensorData(@PathVariable String name, @PathVariable Long sensorDataId) throws Exception {
+    Optional<SensorData> readSensorData(@PathVariable String name, @PathVariable Long sensorDataId) throws Exception {
         this.validateSensor(name);
-        return this.sensorDataRepository.findOne(sensorDataId);
+
+        Optional<SensorData> sensorData = this.sensorDataRepository.findById(sensorDataId);
+        if (sensorData.isPresent()) {
+            return sensorData;
+        } else return null;
     }
 
     private void validateSensor(String sensorName) throws Exception {

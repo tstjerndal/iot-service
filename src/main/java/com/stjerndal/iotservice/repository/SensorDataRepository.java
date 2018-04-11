@@ -1,10 +1,8 @@
 package com.stjerndal.iotservice.repository;
 
-import com.stjerndal.iotservice.com.stjerndal.iotservice.entity.Sensor;
-import com.stjerndal.iotservice.com.stjerndal.iotservice.entity.SensorData;
+import com.stjerndal.iotservice.entity.SensorData;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
 import java.util.Collection;
 
 
