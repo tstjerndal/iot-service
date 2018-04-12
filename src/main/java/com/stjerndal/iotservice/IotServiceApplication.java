@@ -17,6 +17,7 @@ public class IotServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IotServiceApplication.class, args);
 	}
+	/*
 		@Bean
 		CommandLineRunner init(SensorRepository sensorRepository,SensorDataRepository sensorDataRepository) {
 			return (evt) -> Arrays.asList(
@@ -29,5 +30,7 @@ public class IotServiceApplication {
 
 							});
 
+
 	}
+	*/
 }
